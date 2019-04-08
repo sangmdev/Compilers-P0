@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <string.h>
+#include "tree.h"
+
+extern int errno;
+int main(int argc, char* argv[]){
+  if(argc > 2){
+     printf("%s\n", argv[1]);
+     printf("Error: too many arguments\n");
+     exit(EXIT_FAILURE);
+  }
+  FILE *fp;
+  if(argc > 1){
+     printf("argument found\n");
+     char *base = argv[1];
+     char *baseTag = ".sp19";
+     strncat(base, baseTag, 5);
+     printf("%s\n", base);
+     fp = fopen(base, "r");
+     if(fp == NULL){
+	fprintf(stderr, "Error: %s\n", strerror( errno ));
+        exit(EXIT_FAILURE);
+     }
+  }
+  else if(argc == 1){
+     fp = stdin;
+  }
+ /* 
+  char data[100];
+  while(fscanf(fp, "%s", data) != EOF){
+    printf("%s ", data);
+  }
+ */
+
+    struct node *root = buildTree(fp);
+  /*
+   * preorder(root);
+   * inorder(root);
+   * postorder(root);
+  */
+   buildTree();
+ return 0;
+} 
